@@ -3,6 +3,9 @@ import requests
 import os.path
 import re
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 from urllib.parse import urlparse
 from datetime import date, timedelta
 from updates.models import Record
@@ -13,7 +16,6 @@ holidays = [date(2020, 4, 10), date(2020, 4, 13), date(2020, 5, 18),
                 date(2020, 7, 1), date(2020, 8, 3), date(2020, 9, 7)]
 
 def save_past_records(): 
-
     if len(Record.objects.all()) != 0:
         print("Database already populated")
         return
@@ -102,9 +104,12 @@ def save_past_records():
 
         new_record.save()
         print('Saving ', str(new_record))
+    
+    generate_new_cases_chart()
+    print('Saved new chart')
+
 
 def add_new_record():
-
     prev_total = pd.read_csv(os.path.join(settings.MEDIA_ROOT, 'case_details.csv')).shape[0]
     new_csv = pd.read_csv('http://www.bccdc.ca/Health-Info-Site/Documents/BCCDC_COVID19_Dashboard_Case_Details.csv')
     new_total = new_csv.shape[0] 
@@ -121,4 +126,23 @@ def add_new_record():
     print('Saving ', str(new_record))
 
     new_csv.to_csv(os.path.join(settings.MEDIA_ROOT, 'case_details.csv'))
-    print('Saving new case_details.csv')
+    print('Saved new case_details.csv')
+
+    generate_new_cases_chart()
+    print('Saved new chart')
+
+
+def generate_new_cases_chart():
+    qs = Record.objects.all().order_by('date').values('date', 'new_cases')
+
+    date_range = pd.date_range(start=qs[0]['date'], end=qs[len(qs)-1]['date'])
+
+    df = pd.DataFrame(qs)
+    df.date = pd.to_datetime(date_range)
+    df = df.set_index('date')
+
+    df.new_cases = pd.to_numeric(df.new_cases, errors='coerce')
+    plt.bar(df.index, df.new_cases.values)
+    plt.ylabel('number of new cases')
+    plt.gcf().autofmt_xdate()
+    plt.savefig(os.path.join(settings.MEDIA_ROOT, 'new_cases.png'), dpi=400)
