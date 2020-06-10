@@ -7,6 +7,6 @@ def start():
     logging.basicConfig()
     logging.getLogger('apscheduler').setLevel(logging.DEBUG)
 
-    scheduler = BackgroundScheduler(job_defaults={'misfire_grace_time': 15*60})
+    scheduler = BackgroundScheduler(job_defaults={'misfire_grace_time': 60*60*6})
     scheduler.add_job(add_new_record, 'cron', hour='17', minute='05')
     scheduler.start()

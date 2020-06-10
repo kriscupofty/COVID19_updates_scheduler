@@ -5,9 +5,9 @@ class UpdatesConfig(AppConfig):
     name = 'updates'
 
     def ready(self):
-        from updater import extract_records, update
+        from updater import extract_records, updater
 
         extract_records.save_past_records()
-        update.start()
+        updater.start()
 
 

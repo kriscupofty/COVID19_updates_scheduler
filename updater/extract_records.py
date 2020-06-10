@@ -110,7 +110,8 @@ def save_past_records():
 
 
 def add_new_record():
-    prev_total = pd.read_csv(os.path.join(settings.MEDIA_ROOT, 'case_details.csv')).shape[0]
+    prev_csv = pd.read_csv(os.path.join(settings.MEDIA_ROOT, 'case_details.csv'))
+    prev_total = prev_csv.shape[0]
     new_csv = pd.read_csv('http://www.bccdc.ca/Health-Info-Site/Documents/BCCDC_COVID19_Dashboard_Case_Details.csv')
     new_total = new_csv.shape[0] 
     new_date = date.today()
@@ -125,6 +126,7 @@ def add_new_record():
     new_record.save()
     print('Saving ', str(new_record))
 
+    prev_csv.to_csv(os.path.join(settings.MEDIA_ROOT, 'case_details_ytd.csv'))
     new_csv.to_csv(os.path.join(settings.MEDIA_ROOT, 'case_details.csv'))
     print('Saved new case_details.csv')
 
@@ -142,6 +144,7 @@ def generate_new_cases_chart():
     df = df.set_index('date')
 
     df.new_cases = pd.to_numeric(df.new_cases, errors='coerce')
+    plt.style.use('ggplot')
     plt.bar(df.index, df.new_cases.values)
     plt.ylabel('number of new cases')
     plt.gcf().autofmt_xdate()
