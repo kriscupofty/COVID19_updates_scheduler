@@ -6,6 +6,7 @@ import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import seaborn as sns
 from urllib.parse import urlparse
 from datetime import date, timedelta
 from updates.models import Record
@@ -22,7 +23,7 @@ def save_past_records():
 
     # save today's case details csv
     df = pd.read_csv('http://www.bccdc.ca/Health-Info-Site/Documents/BCCDC_COVID19_Dashboard_Case_Details.csv')
-    df.to_csv(os.path.join(settings.MEDIA_ROOT, 'case_details.csv'))  
+    df.to_csv(os.path.join(settings.STATIC_ROOT, 'updates', 'case_details.csv'))  
 
     text = requests.get('http://www.bccdc.ca/health-info/diseases-conditions/covid-19/case-counts-press-statements').text
     names = re.findall(r'href="/Health-Info-Site/Documents/BC_Surveillance_(.*?).pdf"', text)
@@ -52,7 +53,7 @@ def save_past_records():
             print('data unavailable on a holiday')
             continue
 
-        file_name = os.path.join(settings.MEDIA_ROOT, url.split('/')[-1]) 
+        file_name = os.path.join(settings.STATIC_ROOT, 'updates', url.split('/')[-1]) 
         if not os.path.isfile(file_name):
             file = requests.get(url)
             open(file_name, 'wb').write(file.content)
@@ -110,7 +111,7 @@ def save_past_records():
 
 
 def add_new_record():
-    prev_csv = pd.read_csv(os.path.join(settings.MEDIA_ROOT, 'case_details.csv'))
+    prev_csv = pd.read_csv(os.path.join(settings.STATIC_ROOT, 'updates', 'case_details.csv'))
     prev_total = prev_csv.shape[0]
     new_csv = pd.read_csv('http://www.bccdc.ca/Health-Info-Site/Documents/BCCDC_COVID19_Dashboard_Case_Details.csv')
     new_total = new_csv.shape[0] 
@@ -126,8 +127,8 @@ def add_new_record():
     new_record.save()
     print('Saving ', str(new_record))
 
-    prev_csv.to_csv(os.path.join(settings.MEDIA_ROOT, 'case_details_ytd.csv'))
-    new_csv.to_csv(os.path.join(settings.MEDIA_ROOT, 'case_details.csv'))
+    prev_csv.to_csv(os.path.join(settings.STATIC_ROOT, 'updates', 'case_details_ytd.csv'))
+    new_csv.to_csv(os.path.join(settings.STATIC_ROOT, 'updates', 'case_details.csv'))
     print('Saved new case_details.csv')
 
     generate_new_cases_chart()
@@ -142,10 +143,10 @@ def generate_new_cases_chart():
     df = pd.DataFrame(qs)
     df.date = pd.to_datetime(date_range)
     df = df.set_index('date')
-
     df.new_cases = pd.to_numeric(df.new_cases, errors='coerce')
-    plt.style.use('ggplot')
+
+    sns.set()
     plt.bar(df.index, df.new_cases.values)
     plt.ylabel('number of new cases')
     plt.gcf().autofmt_xdate()
-    plt.savefig(os.path.join(settings.MEDIA_ROOT, 'new_cases.png'), dpi=400)
+    plt.savefig(os.path.join(settings.STATIC_ROOT, 'updates', 'new_cases.png'), dpi=400)

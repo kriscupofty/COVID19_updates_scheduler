@@ -25,7 +25,7 @@ SECRET_KEY = '^15ol)ilncxmv^o^q(wkx&#f*1=05i%k$6i5$=4n8=(wyv25)i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -126,5 +126,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'updates', 'static')
