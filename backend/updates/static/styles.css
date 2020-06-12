@@ -1,0 +1,38 @@
+/* Global Styles */
+
+* {
+    font-family: 'Roboto', Arial, sans-serif;
+    color: #616161;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    margin: 0;
+  }
+  
+  .container {
+    display: flex; 
+    align-items: center; 
+    margin-left: 20px; 
+    justify-content: space-between;
+  }
+
+  div.container > * {
+    margin-right: 20px;
+  }
+  
+  /* Text */
+  
+  h1 {
+    font-size: 32px;
+  }
+  
+  h2 {
+    font-size: 20px;
+  }
+  
+  h1, h2 {
+    font-weight: lighter;
+  }
