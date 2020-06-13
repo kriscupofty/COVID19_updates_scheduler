@@ -3,9 +3,11 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'angular/styles.css' %}">
     <title>BC COVID-19 Updates</title>
+    <base href="/">
 </head>
 <body>
     <div class="container">
@@ -16,5 +18,10 @@
         <h5>Note: data is only available on a business day.</h5>
         <img style='position: relative; top: -22px; margin-right: 0;' src="{% static 'updates/new_cases.png' %}" width="50%">
     </div>
+    <app-root></app-root>
+	<script type="text/javascript" src="{% static 'angular/runtime.js' %}"></script>
+	<script type="text/javascript" src="{% static 'angular/polyfills.js' %}"></script>
+	<script type="text/javascript" src="{% static 'angular/main.js' %}"></script>
+
 </body>
 </html>
