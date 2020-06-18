@@ -37,3 +37,10 @@
   h1, h2 {
     font-weight: lighter;
   }
+
+  i {
+    font-size: 11px;
+    top: -7px;
+    position: relative;
+    color: rgb(139, 202, 238);
+  }

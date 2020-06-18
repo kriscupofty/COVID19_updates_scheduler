@@ -8,7 +8,7 @@ h6 {
 }
 
 a {
-  color: lavender;
+  color: rgb(220, 220, 244);
   font-weight: 500;
 }
 
@@ -21,7 +21,7 @@ a {
   display: flex;
   align-items: center;
   background-color: #1976d2;
-  color: white;
+  color: rgb(233, 234, 247);
   font-weight: 600;
   padding: 16px;
 }

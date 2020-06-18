@@ -3,9 +3,9 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
     {% load static %}
     <link rel="stylesheet" href="{% static 'angular/styles.css' %}">
+    <script src="https://kit.fontawesome.com/4160b224b4.js" crossorigin="anonymous"></script>
     <title>BC COVID-19 Updates</title>
     <base href="/">
 </head>
@@ -13,9 +13,11 @@
     <div class="container">
         <h2>Latest BC COVID-19 Update</h2>
         <h4>Date: {{date}}</h4>
-        <h3>Number of new cases: {{new_cases}}</h3>
+        <h3>Number of new cases: {{new_cases}}
+            <i class="fa fa-info-circle" title='Note: Data is only available on a business day. New cases on non-business days will be added to the next business day.'
+             aria-hidden="true"></i>
+        </h3>
         <h5>Last updated: {{timestamp}}</h5>
-        <h5>Note: data is only available on a business day.</h5>
         <img style='position: relative; top: -22px; margin-right: 0;' src="{% static 'updates/new_cases.png' %}" width="50%">
     </div>
     <app-root></app-root>
