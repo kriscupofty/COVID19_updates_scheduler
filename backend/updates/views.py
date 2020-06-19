@@ -6,7 +6,7 @@ from updates.serializers import RecordSerializer
 
 
 class MainPage(TemplateView):
-    def get(self, request, **kwargs):
+    def get(self, request):
         
         latest_record = Record.objects.latest('timestamp')
         date = latest_record.date
@@ -20,6 +20,10 @@ class MainPage(TemplateView):
                 'new_cases': new_cases,
                 'timestamp': latest_record.timestamp
             })
+
+
+def angular_main(request, **kwargs):
+    return render(request, 'angular.html')
 
 
 class RecordViewSet(viewsets.ModelViewSet):
