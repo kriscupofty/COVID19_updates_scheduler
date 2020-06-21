@@ -11,8 +11,8 @@ body {
     margin: 0;
 }
   
-.container {
-    color: #616161;
+.flex-container {
+    color: #515357;
     margin-top: 40px;
     display: flex; 
     align-items: center; 
@@ -20,7 +20,7 @@ body {
     justify-content: space-between;
 }
 
-div.container > * {
+div.flex-container > * {
     margin-right: 20px;
 }
 
