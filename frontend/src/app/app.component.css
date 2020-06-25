@@ -1,4 +1,6 @@
 a {
     color: rgb(220, 220, 244);
     font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
 }

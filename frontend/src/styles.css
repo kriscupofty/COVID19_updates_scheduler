@@ -133,6 +133,11 @@ svg#clouds {
   z-index: -10;
   width: 1920px;
 }
+
+a:hover {
+    opacity: 0.8;
+}
+
 /* Responsive Styles */
 @media screen and (max-width: 767px) {
   .card:not(.highlight-card) {
