@@ -1,1 +1,3 @@
 backend/updates/static/updates/*
+.vscode/*
+tests/chromedriver

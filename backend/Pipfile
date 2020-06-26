@@ -16,6 +16,8 @@ tabula-py = '==2.1.0'
 djangorestframework = "*"
 matplotlib = "*"
 seaborn = "*"
+pytest = "*"
+selenium = "*"
 
 [requires]
 python_version = "3.7"
